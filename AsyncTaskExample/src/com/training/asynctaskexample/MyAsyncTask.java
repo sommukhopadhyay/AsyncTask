@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 public class MyAsyncTask extends AsyncTask<String, Integer, Boolean> {
 	
 	private CallBack cb;
-	
+	Boolean running = true;
 	MyAsyncTask(CallBack cb){
 	
 		this.cb = cb;
@@ -13,20 +13,20 @@ public class MyAsyncTask extends AsyncTask<String, Integer, Boolean> {
 	
 	protected Boolean doInBackground(String... params){
 		
-		for (int i = 0; i<5; i++){
-			
-			try{
-				Thread.sleep(10000,0);
-				if(i == 4) throw new InterruptedException();
-			}
-			catch(InterruptedException e){
+			while(running){
+				try{
+					for (int i = 0; i<5; i++){
+						Thread.sleep(10000,0);
+						publishProgress();
+					}
+				}
+					catch(InterruptedException e){
+						return false;
+					}			
 				
-				return false;
-			}
-			publishProgress();
-			
+				return true;
 		}
-		return true;
+		return false;
 	}
 	
 	protected void onProgressUpdate(Integer... progress){
@@ -36,6 +36,13 @@ public class MyAsyncTask extends AsyncTask<String, Integer, Boolean> {
 	protected void onPostExecute(Boolean result){
 	
 		cb.onResult(result);
+		
+	}
+	
+	protected void onCancelled(){
+		
+		running = false;
+		cb.onCancel(true);
 		
 	}
 

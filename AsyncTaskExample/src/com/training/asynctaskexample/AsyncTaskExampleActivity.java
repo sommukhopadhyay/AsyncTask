@@ -16,6 +16,7 @@ public class AsyncTaskExampleActivity extends Activity implements OnClickListene
 	ProgressDialog progressDialog;
 	Button startAsyncTask;
 	MyAsyncTask aTask;
+	Button cancelAsyncTask;
 	
 	
     /** Called when the activity is first created. */
@@ -24,7 +25,9 @@ public class AsyncTaskExampleActivity extends Activity implements OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         startAsyncTask = (Button)findViewById(R.id.button1);
+        cancelAsyncTask = (Button)findViewById(R.id.button2);
         startAsyncTask.setOnClickListener(this);
+        cancelAsyncTask.setOnClickListener(this);
         MainActivityInstance = this;
         
         //ProgressDialog progressDialog;
@@ -51,6 +54,11 @@ public class AsyncTaskExampleActivity extends Activity implements OnClickListene
                 	toast.show();
         		}
         	}
+        	
+        	public void onCancel(Boolean result){
+        		Toast toast = Toast.makeText(getMainActivity().getApplicationContext(), "Cancelled", 1000);
+            	toast.show();
+        	}
         };
         
         aTask = new MyAsyncTask(c);
@@ -66,6 +74,9 @@ public class AsyncTaskExampleActivity extends Activity implements OnClickListene
     public void onClick(View v){
     	if(v.equals(startAsyncTask)){
     		aTask.execute("Start");
+    	}
+    	if(v.equals(cancelAsyncTask)){
+    		aTask.cancel(true);
     	}
     }
 }
