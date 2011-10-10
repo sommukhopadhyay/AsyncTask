@@ -14,11 +14,16 @@ public class MyAsyncTask extends AsyncTask<String, Integer, Boolean> {
 	protected Boolean doInBackground(String... params){
 		
 			while(running){
+				
+				int i = 0;
 				try{
-					for (int i = 0; i<5; i++){
-						Thread.sleep(10000,0);
+					//for (int i = 0; i<5; i++){
+					do{
+						//Thread.sleep(10000,0);
 						publishProgress();
-					}
+						Thread.sleep(3000,0);
+						i++;
+					}while(i<5);
 				}
 					catch(InterruptedException e){
 						return false;
