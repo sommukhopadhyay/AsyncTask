@@ -6,9 +6,10 @@ public class MyAsyncTask extends AsyncTask<String, Integer, Boolean> {
 	
 	private CallBack cb;
 	Boolean running = true;
-	MyAsyncTask(CallBack cb){
+	MyAsyncTask(Context context, CallBack cb){
 	
 		this.cb = cb;
+		this.context = context;
 	}
 	
 	protected Boolean doInBackground(String... params){
@@ -39,9 +40,10 @@ public class MyAsyncTask extends AsyncTask<String, Integer, Boolean> {
 	}
 	
 	protected void onPostExecute(Boolean result){
+		if(context != null){
+			cb.onResult(result);	
+		}
 	
-		cb.onResult(result);
-		
 	}
 	
 	protected void onCancelled(){
