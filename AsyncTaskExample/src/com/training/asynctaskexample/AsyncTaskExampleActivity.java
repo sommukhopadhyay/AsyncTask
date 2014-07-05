@@ -17,7 +17,7 @@ public class AsyncTaskExampleActivity extends Activity implements OnClickListene
 	Button startAsyncTask;
 	MyAsyncTask aTask;
 	Button cancelAsyncTask;
-	
+	Context context;
 	
     /** Called when the activity is first created. */
     @Override
@@ -29,7 +29,7 @@ public class AsyncTaskExampleActivity extends Activity implements OnClickListene
         startAsyncTask.setOnClickListener(this);
         cancelAsyncTask.setOnClickListener(this);
         MainActivityInstance = this;
-        
+        context = this;
         //ProgressDialog progressDialog;
         progressDialog = new ProgressDialog(this.getApplicationContext());
         progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
@@ -61,7 +61,7 @@ public class AsyncTaskExampleActivity extends Activity implements OnClickListene
         	}
         };
         
-        aTask = new MyAsyncTask(c);
+        aTask = new MyAsyncTask(context, c);
     }   
     static AsyncTaskExampleActivity getMainActivity(){
     	return MainActivityInstance;
